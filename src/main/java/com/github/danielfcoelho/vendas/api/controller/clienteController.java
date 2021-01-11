@@ -1,10 +1,14 @@
 package com.github.danielfcoelho.vendas.api.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.github.danielfcoelho.vendas.domain.entity.cliente;
 import com.github.danielfcoelho.vendas.domain.repository.clienteRepositoryJPA;
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -73,5 +77,15 @@ public class clienteController {
             clienteRepository.save(cliente);
             return ResponseEntity.noContent().build();
         }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping
+    @ResponseBody
+    public ResponseEntity find(cliente filtro) {
+        ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING);
+
+        Example example = Example.of(filtro, matcher);
+        List<cliente> clientes = clienteRepository.findAll(example);
+        return ResponseEntity.ok(clientes);
     }
 }
