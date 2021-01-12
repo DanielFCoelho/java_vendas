@@ -2,6 +2,7 @@ package com.github.danielfcoelho.vendas.domain.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -33,17 +34,17 @@ public class pedido {
     private BigDecimal total;
 
     @OneToMany(mappedBy = "pedido")
-    private Set<itempedido> itens;
+    private List<itempedido> itens;
 
     public Integer getId() {
         return id;
     }
 
-    public Set<itempedido> getItens() {
+    public List<itempedido> getItens() {
         return itens;
     }
 
-    public void setItens(Set<itempedido> itens) {
+    public void setItens(List<itempedido> itens) {
         this.itens = itens;
     }
 
