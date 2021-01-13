@@ -1,14 +1,17 @@
 package com.github.danielfcoelho.vendas.api.controller;
 
 import com.github.danielfcoelho.vendas.api.dto.InformacoesItemPedidoDTO;
+import com.github.danielfcoelho.vendas.api.dto.atualizacaoStatusPedidoDTO;
 import com.github.danielfcoelho.vendas.api.dto.informacoesPedidoDTO;
 import com.github.danielfcoelho.vendas.api.dto.pedidoDTO;
 import com.github.danielfcoelho.vendas.domain.entity.itempedido;
 import com.github.danielfcoelho.vendas.domain.entity.pedido;
+import com.github.danielfcoelho.vendas.domain.enums.statusPedido;
 import com.github.danielfcoelho.vendas.service.pedidoService;
 
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,11 +50,19 @@ public class pedidoController {
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Pedido não encontrado."));
     }
 
+    @PatchMapping("{id}")
+    @ResponseStatus(NO_CONTENT)
+    public void updateStatus(@PathVariable Integer id,
+            @RequestBody atualizacaoStatusPedidoDTO atualizacaoStatusPedido) {
+        String novoStatus = atualizacaoStatusPedido.getNovoStatus();
+        pedidoService.atualizaStatusPedido(id, statusPedido.valueOf(novoStatus));
+    }
+
     private informacoesPedidoDTO converter(pedido pedido) {
         return informacoesPedidoDTO.builder().codigo(pedido.getId())
                 .dataPedido(pedido.getDataPedido().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                 .cpf(pedido.getCliente().getCpf()).nomeCliente(pedido.getCliente().getNome()).total(pedido.getTotal())
-                .itens(converter(pedido.getItens())).build();
+                .status(pedido.getStatus().name()).itens(converter(pedido.getItens())).build();
     }
 
     private List<InformacoesItemPedidoDTO> converter(List<itempedido> items) {

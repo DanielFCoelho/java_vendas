@@ -10,10 +10,12 @@ import com.github.danielfcoelho.vendas.api.dto.pedidoDTO;
 import com.github.danielfcoelho.vendas.domain.entity.cliente;
 import com.github.danielfcoelho.vendas.domain.entity.itempedido;
 import com.github.danielfcoelho.vendas.domain.entity.pedido;
+import com.github.danielfcoelho.vendas.domain.enums.statusPedido;
 import com.github.danielfcoelho.vendas.domain.repository.clienteRepositoryJPA;
 import com.github.danielfcoelho.vendas.domain.repository.itemPedidoRepositoryJPA;
 import com.github.danielfcoelho.vendas.domain.repository.pedidoRepositoryJPA;
 import com.github.danielfcoelho.vendas.domain.repository.produtoRepositoryJPA;
+import com.github.danielfcoelho.vendas.exception.pedidoNotFoundException;
 import com.github.danielfcoelho.vendas.exception.regraNegocioException;
 import com.github.danielfcoelho.vendas.service.pedidoService;
 
@@ -41,6 +43,7 @@ public class pedidosServiceImpl implements pedidoService {
         novoPedido.setTotal(pedido.getTotal());
         novoPedido.setDataPedido(LocalDate.now());
         novoPedido.setCliente(cliente);
+        novoPedido.setStatus(statusPedido.REALIZADO);
 
         List<itempedido> itemsNovoPedido = converteItems(novoPedido, pedido.getItems());
         pedidoRepository.save(novoPedido);
@@ -69,6 +72,15 @@ public class pedidosServiceImpl implements pedidoService {
     @Override
     public Optional<pedido> obterPedidoCompleto(Integer id) {
         return pedidoRepository.findByIdFetchItens(id);
+    }
+
+    @Override
+    @Transactional
+    public void atualizaStatusPedido(Integer id, statusPedido status) {
+        pedidoRepository.findById(id).map(p -> {
+            p.setStatus(status);
+            return pedidoRepository.save(p);
+        }).orElseThrow(() -> new pedidoNotFoundException());
     }
 
 }
