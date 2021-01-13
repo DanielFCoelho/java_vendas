@@ -27,6 +27,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/pedidos")
 public class pedidoController {
@@ -39,7 +41,7 @@ public class pedidoController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public Integer postPedido(@RequestBody pedidoDTO pedido) {
+    public Integer postPedido(@RequestBody @Valid pedidoDTO pedido) {
         pedido pedidoSalvo = pedidoService.save(pedido);
         return pedidoSalvo.getId();
     }

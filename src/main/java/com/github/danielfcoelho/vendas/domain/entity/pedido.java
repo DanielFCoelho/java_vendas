@@ -28,7 +28,7 @@ public class pedido {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "cliente_id")    
     private cliente cliente;
 
     @Column(name = "data_pedido")

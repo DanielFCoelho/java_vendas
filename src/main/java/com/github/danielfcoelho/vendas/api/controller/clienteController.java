@@ -2,6 +2,8 @@ package com.github.danielfcoelho.vendas.api.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.github.danielfcoelho.vendas.domain.entity.cliente;
 import com.github.danielfcoelho.vendas.domain.repository.clienteRepositoryJPA;
 
@@ -39,7 +41,7 @@ public class clienteController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public cliente postCliente(@RequestBody final cliente cliente) {
+    public cliente postCliente(@RequestBody @Valid final cliente cliente) {
         return clienteRepository.save(cliente);
     }
 

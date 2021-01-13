@@ -1,25 +1,19 @@
 package com.github.danielfcoelho.vendas;
 
-import com.github.danielfcoelho.vendas.domain.entity.cliente;
-import com.github.danielfcoelho.vendas.domain.repository.clienteRepositoryJPA;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication // Anotação que indica que a classe que é responsável por iniciar uma aplicação
 						// spring boot
 public class VendasApplication {
 
-	@Bean
-	public CommandLineRunner init(@Autowired clienteRepositoryJPA clienteRepository) {
-		return args -> {
-			cliente c = new cliente("Alvaro");
-			clienteRepository.save(c);
-		};
-	}
+	// @Bean
+	// public CommandLineRunner init(@Autowired clienteRepositoryJPA clienteRepository) {
+	// 	return args -> {
+	// 		cliente c = new cliente("Alvaro");
+	// 		clienteRepository.save(c);
+	// 	};
+	// }
 
 	// @Bean
 	// public CommandLineRunner init(@Autowired clienteRepositoryJPA

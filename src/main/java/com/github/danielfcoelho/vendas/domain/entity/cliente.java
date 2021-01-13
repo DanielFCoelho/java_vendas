@@ -9,8 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 @Table(name = "cliente")
@@ -21,9 +24,12 @@ public class cliente {
     private Integer id;
 
     @Column(name = "nome", length = 100)
+    @NotEmpty(message = "Nome é obrigatório.")
     private String nome;
 
     @Column(name = "cpf", length = 11)
+    @NotEmpty(message = "CPF é obrigatório")
+    @CPF(message = "CPF inválido")
     private String cpf;
 
     @JsonIgnore

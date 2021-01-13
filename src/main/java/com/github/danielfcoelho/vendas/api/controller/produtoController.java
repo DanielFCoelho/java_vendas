@@ -2,6 +2,8 @@ package com.github.danielfcoelho.vendas.api.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.github.danielfcoelho.vendas.domain.entity.produto;
 import com.github.danielfcoelho.vendas.domain.repository.produtoRepositoryJPA;
 
@@ -47,13 +49,13 @@ public class produtoController {
 
     @PostMapping()
     @ResponseStatus(CREATED)
-    public produto postProduto(@RequestBody produto produto) {
+    public produto postProduto(@RequestBody @Valid produto produto) {
         return produtoRepository.save(produto);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(NO_CONTENT)
-    public void putProduto(@PathVariable Integer id, @RequestBody produto produto) {
+    public void putProduto(@PathVariable Integer id, @RequestBody @Valid produto produto) {
         produtoRepository.findById(id).map(p -> {
             produto.setId(p.getId());
             produtoRepository.save(produto);
