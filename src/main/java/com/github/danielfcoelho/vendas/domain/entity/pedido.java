@@ -3,7 +3,6 @@ package com.github.danielfcoelho.vendas.domain.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

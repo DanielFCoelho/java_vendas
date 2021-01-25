@@ -13,10 +13,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class pedidoDTO {
-    @NotNull(message = "Código do cliente é obrigatório.")
+    @NotNull(message = "{campo.codigo-cliente.obrigatorio}")
     private Integer cliente;
-    @NotNull(message = "Total do pedido é obrigatório.")
+    @NotNull(message = "{campo.total-pedido.obrigatorio}")
     private BigDecimal total;
-    @notEmptyList(message = "Pedido não pode ser realizado sem itens.")
+    @notEmptyList(message = "{campo.itens-pedido.obrigatorio}")
     List<ItemPedidoDTO> items;
 }
