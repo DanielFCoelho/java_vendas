@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.br.CPF;
 @Table(name = "cliente")
 public class cliente {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
